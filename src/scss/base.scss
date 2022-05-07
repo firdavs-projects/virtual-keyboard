@@ -15,8 +15,29 @@ body {
   //background: url('./icon.png');
 }
 
-.keyboard-container {
+#root{
+  max-width: 1024px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
 
+.textarea{
+  width: 100%;
+  height: 100px;
+  resize: none;
+  margin-top: 30px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  &:focus{
+    outline: none;
+  }
+}
+
+.keyboard-container {
+  margin-bottom: 30px;
   width: 100%;
 
   .keyboard-wrapper {
@@ -28,16 +49,52 @@ body {
       justify-content: space-between;
 
       .key{
-        width: 100%;
-        height: 100%;
-        border: 1px solid red;
+        height: 55px;
+        margin: 5px;
+        border-radius: 5px;
+        border: 1px solid gray;
         display: flex;
         justify-content: center;
         align-items: center;
+        position: relative;
+        font-size: 1.2rem;
+        cursor: pointer;
+        width: 60px;
+
+        .numpad{
+          position: absolute;
+          top: 3px;
+          left: 3px;
+          font-size: 0.7rem;
+        }
+
+        &.pressed{
+          background: #d83e0f;
+          color: white;
+        }
+
+        &:hover{
+          background: #2c2c2c;
+          color: white;
+        }
       }
     }
   }
+}
 
+.min100 {
+  min-width: 100px;
+}
 
+.min130 {
+  min-width: 140px;
+}
+
+.min300 {
+  min-width: 400px;
+}
+
+.default {
+  max-width: 50px;
 }
 
