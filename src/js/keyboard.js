@@ -273,7 +273,7 @@ function handleKeyDown(e) {
             if (key.dataset.shift) {
                 key.innerText = key.dataset.shift;
             }
-        }
+        })
     }
 }
 
