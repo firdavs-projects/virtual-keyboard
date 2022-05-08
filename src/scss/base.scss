@@ -1,4 +1,4 @@
-$body-color: green;
+//$body-color: green;
 
 // Подключения шрифтов
 //@font-face {
@@ -10,7 +10,7 @@ $body-color: green;
 //}
 
 body {
-  color: $body-color;
+  color: #fff;
   // подключения картинок
   //background: url('./icon.png');
 }
@@ -36,6 +36,10 @@ body {
   }
 }
 
+#info, #lang{
+  color: #222222;
+}
+
 .keyboard-container {
   margin-bottom: 30px;
   width: 100%;
@@ -53,6 +57,7 @@ body {
         margin: 5px;
         border-radius: 5px;
         border: 1px solid gray;
+        background: #222222;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -73,10 +78,15 @@ body {
           color: white;
         }
 
-        &:hover{
-          background: #2c2c2c;
-          color: white;
-        }
+        //&:target{
+        //  background: #d83e0f;
+        //  color: white;
+        //}
+        //
+        //&:hover{
+        //  background: #7d7d7d;
+        //  color: white;
+        //}
       }
     }
   }
@@ -87,11 +97,11 @@ body {
 }
 
 .min130 {
-  min-width: 140px;
+  min-width: 135px;
 }
 
 .min300 {
-  min-width: 400px;
+  min-width: 430px;
 }
 
 .default {

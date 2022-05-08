@@ -15,7 +15,7 @@ module.exports = {
     watch: true,
     output: {
         filename: '[name].[contenthash].js', // динамичное и уникальное имя файла
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'docs'),
         clean: true, // для очистки папки dist при новом билде
     },
     plugins: [
