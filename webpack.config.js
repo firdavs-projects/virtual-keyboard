@@ -7,7 +7,7 @@ module.exports = {
     mode: 'development',
     devtool: 'inline-source-map',
     devServer: {
-        /** Будет запускать сервер на localhost:8080 в этой папке*/
+        /** Будет запускать сервер на localhost:8080 */
         port: 8080,
         hot: true,
         open: true,
@@ -16,7 +16,7 @@ module.exports = {
     output: {
         filename: '[name].[contenthash].js', // динамичное и уникальное имя файла
         path: path.resolve(__dirname, 'docs'),
-        clean: true, // для очистки папки dist при новом билде
+        clean: true, // для очистки папки docs при новом билде
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -35,13 +35,11 @@ module.exports = {
                         presets: ['@babel/preset-env']
                     }
                 }
-                // npm install babel-loader @babel/core @babel/preset-env -D
             },
             /** CSS */
             {
                 test: /\.css$/i,
                 use: ['style-loader', 'css-loader'],
-                // npm i style-loader css-loader -D
             },
             /** SCSS/SAAS */
             {
@@ -54,7 +52,6 @@ module.exports = {
                     // Compiles Sass to CSS
                     "sass-loader",
                 ],
-                // npm i style-loader css-loader sass sass-loader -D
             },
             /** Картинки */
             {
@@ -70,13 +67,11 @@ module.exports = {
             {
                 test: /\.(csv|tsv)$/i,
                 use: ['csv-loader'],
-                // npm i csv-loader -D
             },
             /** Файлы XML */
             {
                 test: /\.xml$/i,
                 use: ['xml-loader'],
-                // npm i xml-loader -D
             },
         ],
     },
