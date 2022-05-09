@@ -30,6 +30,7 @@ export const keysData = [
         {key: {en: '[', ru: 'х'}, code: 'BracketLeft', shift: {en: '{', ru: 'Х'}},
         {key: {en: ']', ru: 'ъ'}, code: 'BracketRight', shift: {en: '}', ru: 'Ъ'}},
         {key: {en: '\\', ru: '\\'}, code: 'Backslash', shift: {en: '|', ru: '\\'}},
+        {key: {en: 'Delete', ru: 'Delete'}, code: 'Delete', shift: {en: '', ru: ''}},
     ],
     [
         {key: {en: 'CapsLock', ru: 'CapsLock'}, code: 'CapsLock', shift: {en: '', ru: ''}},
@@ -73,8 +74,9 @@ export const keysData = [
         {key: {en: 'Right', ru: 'Right'}, code: 'ArrowRight', shift: {en: '', ru: ''}},
     ],
 ];
-export const functionalKeys = ['CapsLock', 'Shift', 'Control', 'Alt', 'Meta', 'Enter', 'Tab', 'Backspace', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight', 'MetaLeft'];
+export const functionalKeys = ['CapsLock', 'Shift', 'Control', 'Alt', 'Delete', 'Meta', 'Enter', 'Tab', 'Backspace', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight', 'MetaLeft'];
 export const letters = {
     en: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'],
     ru: ['а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н', 'о', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я'],
 };
+export const allowedKeys = ['Meta', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Backspace', 'Enter', 'Delete'];

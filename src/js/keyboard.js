@@ -1,4 +1,4 @@
-import { keysData, functionalKeys, letters } from '../accets/data';
+import {keysData, functionalKeys, letters, allowedKeys} from '../accets/data';
 
 const state = {
     lang: localStorage.getItem('lang') || 'en',
@@ -42,7 +42,41 @@ const clickHandler = (e) => {
             }, 200);
         }
         if (!functionalKeys.includes(key.id)) {
-            textarea.value += key.innerText;
+            // set after cursor position
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            // set text
+            const text = textarea.value;
+            const before = text.substring(0, start);
+            const after = text.substring(end, text.length);
+            let addedText = key.dataset[state.lang];
+            if (state.Shift && !state.CapsLock) {
+                addedText = key.dataset[state.lang + 'shift'];
+            }
+            if (state.CapsLock && !state.Shift && letters[state.lang].includes(key.dataset[state.lang])) {
+                addedText = key.dataset[state.lang + 'shift'];
+            }
+            if (state.CapsLock && state.Shift) {
+                if (letters[state.lang].includes(key.dataset[state.lang])) {
+                    addedText = key.dataset[state.lang];
+                } else {
+                    addedText = key.dataset[state.lang + 'shift'];
+                }
+            }
+            textarea.value = before + addedText + after;
+            // set cursor position
+            textarea.selectionStart = start + key.dataset[state.lang].length;
+            textarea.selectionEnd = start + key.dataset[state.lang].length;
+        }
+        if (key.id === 'Delete') {
+            // delete symbol after cursor
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const value = textarea.value;
+            textarea.value = value.substring(0, start) + value.substring(end + 1, value.length);
+            // set cursor to the end
+            textarea.selectionStart = start;
+            textarea.selectionEnd = start;
         }
         if (key.id === 'CapsLock') {
             state.CapsLock = !state.CapsLock;
@@ -65,22 +99,51 @@ const clickHandler = (e) => {
             updateKeyboard();
         }
         if (key.id === 'ArrowLeft') {
-            textarea.selectionStart--;
+            const prev = textarea.selectionStart - 1;
+            textarea.selectionStart = prev;
+            textarea.selectionEnd = prev;
         }
         if (key.id === 'ArrowRight') {
-            textarea.selectionStart++;
+            const next = textarea.selectionStart + 1;
+            textarea.selectionStart = next;
+            textarea.selectionEnd = next;
         }
         if (key.id === 'ArrowUp') {
-            textarea.selectionStart -= textarea.value.length;
+            // set a cursor to the end of the previous line
+            const start = textarea.selectionStart;
+            const value = textarea.value;
+            const prevLine = value.substring(0, start).lastIndexOf('\n');
+            textarea.selectionStart = prevLine;
+            textarea.selectionEnd = prevLine;
         }
         if (key.id === 'ArrowDown') {
-            textarea.selectionStart += textarea.value.length;
+            // set a cursor to the start of the next line
+            const start = textarea.selectionStart;
+            const value = textarea.value;
+            const before = value.substring(0, start);
+            const nextLine = value.substring(start, value.length).indexOf('\n', 1)
+            textarea.selectionStart = nextLine + before.length;
+            textarea.selectionEnd = nextLine + before.length;
         }
         if (key.id === 'Backspace') {
-            textarea.value = textarea.value.slice(0, -1);
+            // delete symbol before cursor
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const value = textarea.value;
+            textarea.value = value.substring(0, start - 1) + value.substring(end, value.length);
+            // set cursor to the end
+            textarea.selectionStart = start - 1;
+            textarea.selectionEnd = start - 1;
         }
         if (key.id === 'Enter') {
-            textarea.value += '\n';
+            //add new line after cursor
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const value = textarea.value;
+            textarea.value = value.substring(0, start) + '\n' + value.substring(end, value.length);
+            // set cursor to the end
+            textarea.selectionStart = start + 1;
+            textarea.selectionEnd = start + 1;
         }
         if (key.id === 'Tab') {
             textarea.value += '\t';
@@ -92,41 +155,49 @@ const clickHandler = (e) => {
 }
 
 const handleKeyDown = (e) => {
-    e.preventDefault();
+    if (!allowedKeys.includes(e.key)) {
+        e.preventDefault();
+    }
     textarea.focus();
     const key = document.getElementById(e.code);
-    key.classList.add('pressed');
+    key?.classList.add('pressed');
     if (!functionalKeys.includes(e.key)) {
-        if (state.CapsLock && letters[state.lang].includes(e.key)) {
-            textarea.value += key.dataset[state.lang + 'shift'];
-            return;
+        let addedText = '';
+        if (state.CapsLock && !state.Shift) {
+            if (letters[state.lang].includes(key.dataset[state.lang])) {
+                addedText = key.dataset[state.lang + 'shift'];
+            } else {
+                addedText = key.dataset[state.lang];
+            }
         }
-        if (state.Shift || state.CapsLock) {
-            textarea.value += key.dataset[state.lang + 'shift'];
-            return;
+        if (state.Shift && state.CapsLock) {
+            if (letters[state.lang].includes(key.dataset[state.lang])) {
+                addedText = key.dataset[state.lang];
+            } else {
+                addedText = key.dataset[state.lang + 'shift'];
+            }
         }
-        textarea.value += key.dataset[state.lang];
+        if (state.Shift && !state.CapsLock) {
+            addedText = key.dataset[state.lang + 'shift'];
+        }
+        if (!state.Shift && !state.CapsLock) {
+            addedText = key.dataset[state.lang];
+        }
+        //set key after cursor
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const value = textarea.value;
+        textarea.value = addedText
+            ? value.substring(0, start) + addedText + value.substring(end, value.length)
+            : e.key.length === 1
+                ? value.substring(0, start) + e.key + value.substring(end, value.length)
+                : value;
+        // set cursor to the end
+        textarea.selectionStart = start + 1;
+        textarea.selectionEnd = start + 1;
     }
     if (e.code === 'Tab') {
         textarea.value += '\t';
-    }
-    if (e.code === 'Backspace') {
-        textarea.value = textarea.value.slice(0, -1);
-    }
-    if (e.code === 'Enter') {
-        textarea.value += '\n';
-    }
-    if (e.code === 'ArrowUp') {
-        textarea.selectionStart -= textarea.value.length;
-    }
-    if (e.code === 'ArrowDown') {
-        textarea.selectionStart += textarea.value.length;
-    }
-    if (e.code === 'ArrowLeft') {
-        textarea.selectionStart--;
-    }
-    if (e.code === 'ArrowRight') {
-        textarea.selectionStart++;
     }
     if (e.code === 'CapsLock') {
         state.CapsLock = !state.CapsLock;
@@ -149,7 +220,7 @@ const handleKeyUp = (e) => {
         return;
     }
     updateKeyboard('up', e);
-    key.classList.remove('pressed');
+    key?.classList.remove('pressed');
 }
 
 const updateKeyboard = (keyState = 'down', e) => {
@@ -210,17 +281,17 @@ const updateKeyboard = (keyState = 'down', e) => {
                             key.innerText = key.dataset[state.lang];
                         }
                     }
-                    if (!state.CapsLock && state.Shift){
+                    if (!state.CapsLock && state.Shift) {
                         key.innerHTML = key.dataset[state.lang + 'shift']
                     }
-                    if (!state.CapsLock && !state.Shift){
+                    if (!state.CapsLock && !state.Shift) {
                         key.innerHTML = key.dataset[state.lang]
                     }
                     if (state.CapsLock && state.Shift) {
                         if (letters[state.lang].includes(key.dataset[state.lang])) {
                             key.innerText = key.dataset[state.lang];
                         } else {
-                            key.innerText = key.dataset[state.lang  + 'shift'];
+                            key.innerText = key.dataset[state.lang + 'shift'];
                         }
                     }
                 }
