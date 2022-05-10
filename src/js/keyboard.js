@@ -363,7 +363,7 @@ const textarea = document.createElement('textarea');
 textarea.classList.add('textarea');
 textarea.value = `<h1>Hello World</h1>
 P.S. Ctrl + Alt to toggle language
-
+https://github.com/firdavs-projects/virtual-keyboard/pull/1
 Developed from Windows OS by Firdavs Abdulloev, 2022
 `
 
