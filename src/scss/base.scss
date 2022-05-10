@@ -1,0 +1,126 @@
+body {
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  background: #7d7d7d;
+}
+
+#root {
+  max-width: 1024px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  min-height: 700px;
+}
+
+.textarea {
+  height: 150px;
+  resize: none;
+  margin-top: 30px;
+  margin-left: 5px;
+  margin-right: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  background: #222222;
+  font-family: "monospace", monospace;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+#info, #lang {
+  color: #222222;
+}
+
+.keyboard-container {
+  margin-bottom: 30px;
+  width: 100%;
+
+  .keyboard-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .keyboard-row {
+      display: flex;
+      justify-content: space-between;
+
+      .key {
+        height: 55px;
+        margin: 5px;
+        border-radius: 5px;
+        border: 1px solid gray;
+        background: #222222;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        font-size: 1.05rem;
+        cursor: pointer;
+        width: 60px;
+        transition: all 0.2s ease-in-out;
+
+        .numpad {
+          position: absolute;
+          top: 3px;
+          left: 3px;
+          font-size: 0.7rem;
+        }
+
+        &.pressed {
+          background: #d83e0f!important;
+          transform: scale(0.9);
+          color: white;
+        }
+
+        &:hover {
+          background: #3e3e3e;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+.min100 {
+  min-width: 100px;
+}
+
+.min130 {
+  min-width: 135px;
+}
+
+.min300 {
+  min-width: 430px;
+}
+
+.default {
+  max-width: 50px;
+}
+
+#info {
+  margin-left: 5px;
+  margin-right: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222222;
+  color: white;
+  border-radius: 5px;
+  padding-left: 7px;
+}
+
+#lang {
+  border-radius: 5px;
+  padding: 7px;
+  color: white;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  background: #d83e0f;
+  width: fit-content;
+}
+
