@@ -61,6 +61,7 @@ body {
         font-size: 1.05rem;
         cursor: pointer;
         width: 60px;
+        transition: all 0.2s ease-in-out;
 
         .numpad {
           position: absolute;
@@ -71,6 +72,7 @@ body {
 
         &.pressed {
           background: #d83e0f!important;
+          transform: scale(0.9);
           color: white;
         }
 
